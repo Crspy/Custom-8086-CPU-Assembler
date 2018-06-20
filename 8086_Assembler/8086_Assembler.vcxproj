@@ -149,7 +149,7 @@
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="tROMBlock.h" />
+    <ClInclude Include="CROMBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="8086_Assembler.cpp" />
