@@ -1,6 +1,7 @@
 #include "COpcode.h"
 
-#define swap_endian(num)  (num>>8) | (num<<8)
+
+
 
 int8_t COpcode::GetRegID(const char* lineReg)
 {
@@ -14,6 +15,19 @@ int8_t COpcode::GetRegID(const char* lineReg)
         return eRegID::DX;
     else
         return -1;
+}
+
+void COpcode::EliminateComments(char* line)
+{
+    char keys[] = "/;";
+    char* pch = NULL;
+    pch = strpbrk(line, keys);
+    while (pch != NULL)
+    {
+        //std::cout << "FOUND THE COMMENT START " << "\n";
+        strcpy(pch, "\0");
+        pch = strpbrk(pch + 1, keys);
+    }
 }
 
 eOpcodeDir COpcode::GetOpcodeDir(std::string line)
@@ -123,7 +137,8 @@ eErrorType COpcode::ProcessMoveOUT(tMemAddress* memadd, tInstBlock* currentInst,
 
 
     token = strtok(NULL, " [], \t");
-    logger(token);
+    
+    EliminateComments(token);
 
     reg = GetRegID(token);
     if (reg == -1) // then it's moving value to dataSeg
@@ -190,7 +205,7 @@ eErrorType COpcode::ProcessIndirectMoveOUT(tMemAddress* memadd, tInstBlock* curr
 
     token = strtok(NULL, " [], \t");
     logger(token);
-
+    EliminateComments(token);
     reg = GetRegID(token);
     if (reg == -1 || reg == eRegID::BX) // then it's moving value to dataSeg
     {

@@ -33,6 +33,8 @@ enum eOpcodeDir
 class COpcode
 {
 public:
+    static void EliminateComments(char* line);
+
     static int8_t GetRegID(const char* lineReg);
 
     static eOpcodeDir GetOpcodeDir(std::string line);

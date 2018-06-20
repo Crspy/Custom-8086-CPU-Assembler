@@ -11,10 +11,11 @@ bool IsCommentLine(std::string& line,char* linebuff)
         if (first != ' '
             && first != '/'
             && first != '\t'
-            && first != '\n')
+            && first != '\n'
+            && first != ';')
             return false;
 
-        if (first == '/')
+        if (first == '/' || first == ';')
         {
             return true;
         }
