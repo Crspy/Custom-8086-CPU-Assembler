@@ -17,7 +17,7 @@ void CErrorHandler::PrintErrorMessage(eErrorType errortype, long& linecount)
         message = "Compiler Error , unknown reg name....in line : ";
         break;
     case DATA_VALUE_OUTOFBOUNDS:
-        message = "Compiler Error , data value is Out Of Bounds 15bits....in line : ";
+        message = "Compiler Error , data value is Out Of Bounds signed short integer....in line : ";
         break;
     case UNKNOWN_REG_NAME_OR_NOT_USING_BX_IN_LEFT_OPERAND:
         message = "Compiler Error , unknown reg name or not using bx in left operand....in line : ";

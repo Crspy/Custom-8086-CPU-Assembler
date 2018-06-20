@@ -1,5 +1,7 @@
 #include "COpcode.h"
 
+#define swap_endian(num)  (num>>8) | (num<<8)
+
 int8_t COpcode::GetRegID(const char* lineReg)
 {
     if (strcmp(lineReg, "ax") == 0)
@@ -127,12 +129,12 @@ eErrorType COpcode::ProcessMoveOUT(tMemAddress* memadd, tInstBlock* currentInst,
     if (reg == -1) // then it's moving value to dataSeg
     {
 
-        unsigned short _value;
+        long lvalue;
         try
         {
-            _value = strtol(token, NULL, 0);
+            lvalue = strtol(token, NULL, 0);
             logger("VALUE");
-            logger(_value);
+            logger(lvalue);
         }
         catch (std::exception& e)
         {
@@ -141,7 +143,7 @@ eErrorType COpcode::ProcessMoveOUT(tMemAddress* memadd, tInstBlock* currentInst,
 
         }
 
-        if (_value > 0x7FFF)
+        if (lvalue > 32767 || lvalue < -32768)
         {
             return eErrorType::DATA_VALUE_OUTOFBOUNDS;
 
@@ -150,8 +152,12 @@ eErrorType COpcode::ProcessMoveOUT(tMemAddress* memadd, tInstBlock* currentInst,
         {
             *bMovingData = true;
             memadd->m_bNeedLoading = false;
-            *reinterpret_cast<uint16_t*>((uint8_t*)&myrom->RomSeg[0].RomSegLow + memadd->m_Address) = _value;
-            *reinterpret_cast<uint16_t*>((uint8_t*)&myrom->RomSeg[0].RomSegLow + memadd->m_Address) |= 1;
+            int16_t _value = lvalue;
+            //std::cout << "THE SIGNED  " << _value << "\n";
+
+            // swapping endianess
+            *(((char*)&myrom->DataSeg[memadd->m_Address].value + 1)) = *(((char*)&_value));
+            *(((char*)&myrom->DataSeg[memadd->m_Address].value)) = *(((char*)& _value + 1));
         }
 
     }

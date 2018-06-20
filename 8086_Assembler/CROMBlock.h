@@ -42,16 +42,14 @@ public:
 
                 struct
                 {
-                    uint16_t data_flag : 1;  // always 1 since we will treat the Inst segment as data segment
-                    uint16_t value : 15;
+                    int16_t value;
                 } InstSeg[32768]; // 32768 byte low  and 32768 high
 
             };
 
             struct
             {
-                uint16_t data_flag : 1;  // always 1
-                uint16_t value : 15;
+                int16_t value;
             } DataSeg[32768]; // 32768 byte low  and 32768 high
         };
 
@@ -63,13 +61,12 @@ public:
             {
                 struct
                 {
-                    uint16_t data_flag : 1;  // always 1
-                    uint16_t value : 15;
+                    int16_t value;                 
                 };
                 struct
                 {
-                    uint8_t RomSegHigh;
-                    uint8_t RomSegLow;
+                    int8_t RomSegHigh;
+                    int8_t RomSegLow;
                 };
             };
         } RomSeg[32768 * 2]; // 65536 byte low and 65536 high
@@ -109,6 +106,7 @@ public:
                     {
                         uint8_t reg_id : 2;
                         uint8_t dir_flag : 1; // 0 - in  ,  1 - out
+
                         uint8_t opcode : 5;
                     };
                     uint8_t InstHighByte;
@@ -120,11 +118,11 @@ public:
                 union
                 {
                     struct
-                    {
-                        uint8_t data_flag : 1;  // always 1
-                        uint8_t value_high : 7;
+                    {      
+                       int8_t value_high;                      
                     };
-                    uint8_t DataHighByte;
+
+                    int8_t DataHighByte;
                 };
 
             } DataSeg[32768]; // 32768 byte high
@@ -137,11 +135,11 @@ public:
             union
             {
                 struct
-                {
-                    uint8_t data_flag : 1;  // always 1
-                    uint8_t value_high : 7;
+                {         
+                    int8_t value_high;
+                    
                 };
-                uint8_t RomHighByte;
+                int8_t RomHighByte;
             };
 
         } RomSeg[32768 * 2]; // 65536 byte high
@@ -183,9 +181,9 @@ public:
                 {
                     struct 
                     {
-                        uint8_t value_low;
+                        int8_t value_low;
                     };
-                    uint8_t DataLowByte;
+                    int8_t DataLowByte;
                 };
                 
             } DataSeg[32768]; // 32768 byte low
@@ -199,9 +197,9 @@ public:
             {
                 struct
                 {
-                    uint8_t value_low;
+                    int8_t value_low;
                 };
-                uint8_t RomLowByte;
+                int8_t RomLowByte;
             };
             
         } RomSeg[32768 * 2]; // 65536 byte low
