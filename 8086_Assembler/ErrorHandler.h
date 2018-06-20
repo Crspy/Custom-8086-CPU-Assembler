@@ -1,0 +1,23 @@
+#pragma once
+#include "stdafx.h"
+
+enum eErrorType
+{
+    NO_ERROR,
+    USING_REGNAME_INSTEAD,
+    MEM_ADDRESS_EXCEEDS,
+    UNKNOWN_REG_NAME,
+    DATA_VALUE_OUTOFBOUNDS,
+    UNKNOWN_REG_NAME_OR_NOT_USING_BX_IN_LEFT_OPERAND,
+    UNKNOWN_REG_NAME_OR_USING_BX_IN_RIGHT_OPERAND,
+    UNKNOWN_REG_NAME_OR_USING_BX_IN_LEFT_OPERAND,
+    UNKNOWN_REG_NAME_OR_NOT_USING_BX_IN_RIGHT_OPERAND,
+    UNKNOWN_OPCODE,
+    ROM_INSTRUCTION_SEGMENT_OVERFLOW,
+};
+
+class CErrorHandler
+{
+public:
+    static void PrintErrorMessage(eErrorType errortype, long& linecount);
+};

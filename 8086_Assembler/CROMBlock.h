@@ -1,33 +1,5 @@
 #pragma once
 
-struct tMemAddress
-{
-    union
-    {
-        uint32_t m_Address;
-        struct
-        {
-            uint8_t byte0;
-            uint8_t byte1;
-            uint8_t byte2;
-            uint8_t byte3;
-        };
-    };
-    bool m_bNeedLoading;
-
-    bool InsureAddress()
-    {
-        if (this->m_Address > 0xFFFF)   return false;
-
-        this->m_bNeedLoading = (this->m_Address > 0xFF) ? true : false;
-
-        return true;
-    }
-    
-};
-static_assert(sizeof(tMemAddress) == 8, "tMemAddress size is incorrect");
-
-
 struct tInstBlock
 {
 public:
@@ -245,35 +217,3 @@ public:
 static_assert(sizeof(CROMBlockLow) == 65536, "CROMBlockHigh size is incorrect");
 
 
-enum eRegID : int8_t
-{
-    AX,
-    BX,
-    CX,
-    DX
-};
-
-
-enum eOpcode
-{
-    MOVE_IN = 1,
-    MOVE_OUT = 2,
-    LOAD = 3,
-    INDIRECT_IN = 4,
-    INDIRECT_OUT = 5
-};
-
-
-int8_t GetRegID(const char* lineReg)
-{
-    if (strcmp(lineReg,"ax") == 0)
-        return eRegID::AX;
-    else if (strcmp(lineReg, "bx") == 0)
-        return eRegID::BX;
-    else if (strcmp(lineReg, "cx") == 0)
-        return eRegID::CX;
-    else if (strcmp(lineReg, "dx") == 0)
-        return eRegID::DX;
-    else
-        return -1;
-}
